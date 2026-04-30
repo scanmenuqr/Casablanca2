@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casablanca — Menu Restaurant</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f5efe6;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+    header h1 {
+      font-size: 1rem;
+      letter-spacing: 0.35em;
+      color: #6b1a1a;
+      text-transform: uppercase;
+    }
+    header p {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #b09070;
+      margin-top: 0.25rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav button {
+      background: transparent;
+      border: 1px solid #6b1a1a;
+      color: #6b1a1a;
+      padding: 0.5rem 1.2rem;
+      font-family: 'Georgia', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    nav button.active, nav button:hover {
+      background: #6b1a1a;
+      color: #f5efe6;
+    }
+
+    .page { display: none; width: 100%; max-width: 500px; padding: 0 1rem 3rem; }
+    .page.active { display: block; }
+
+    .page img {
+      width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      width: 100%;
+      max-width: 500px;
+      padding: 1rem 1rem 2rem;
+    }
+    .nav-arrows button {
+      background: transparent;
+      border: 1px solid #6b1a1a;
+      color: #6b1a1a;
+      padding: 0.5rem 1.5rem;
+      font-family: 'Georgia', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .nav-arrows button:hover { background: #6b1a1a; color: #f5efe6; }
+    .nav-arrows button:disabled { opacity: 0.2; cursor: default; }
+    .nav-arrows button:disabled:hover { background: transparent; color: #6b1a1a; }
+
+    .page-indicator {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #b09070;
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Casablanca — Café Américain</h1>
+    <p>MIRLEFT</p>
+  </header>
+
+  <nav>
+    <button class="active" onclick="goTo(0)">Entrées & Salades</button>
+    <button onclick="goTo(1)">Viandes & Poissons</button>
+    <button onclick="goTo(2)">Desserts</button>
+  </nav>
+
+  <div class="page active" id="page0">
+    <img src="menu_page1.png" alt="Entrées et Salades">
+  </div>
+  <div class="page" id="page1">
+    <img src="menu_page2.png" alt="Viandes, Volailles et Poissons">
+  </div>
+  <div class="page" id="page2">
+    <img src="menu_page3.png" alt="Desserts">
+  </div>
+
+  <div class="nav-arrows">
+    <button id="btn-prev" onclick="goTo(current-1)" disabled>← Précédent</button>
+    <span class="page-indicator" id="indicator">1 / 3</span>
+    <button id="btn-next" onclick="goTo(current+1)">Suivant →</button>
+  </div>
+
+  <script>
+    let current = 0;
+    const pages = document.querySelectorAll('.page');
+    const navBtns = document.querySelectorAll('nav button');
+
+    function goTo(n) {
+      pages[current].classList.remove('active');
+      navBtns[current].classList.remove('active');
+      current = n;
+      pages[current].classList.add('active');
+      navBtns[current].classList.add('active');
+      document.getElementById('indicator').textContent = (current+1) + ' / ' + pages.length;
+      document.getElementById('btn-prev').disabled = current === 0;
+      document.getElementById('btn-next').disabled = current === pages.length - 1;
+      window.scrollTo(0, 0);
+    }
+  </script>
+
+</body>
+</html>
